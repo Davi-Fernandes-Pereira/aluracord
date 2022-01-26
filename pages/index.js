@@ -1,40 +1,10 @@
-import { Box, Button, Text, TextField, Image } from '@skynexui/components';
+import { Box, Button, Text, TextField, Image } from "@skynexui/components";
+import React from "react";
+import { useRouter } from "next/router";
 import appConfig from "../config.json";
 
-function GlobalStyle() {
-  return (
-    <>
-      <style global jsx>{`
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-          list-style: none;
-        }
-        body {
-          font-family: "Open Sans", sans-serif;
-        }
-        /* App fit Height */
-        html,
-        body,
-        #__next {
-          min-height: 100vh;
-          display: flex;
-          flex: 1;
-        }
-        #__next {
-          flex: 1;
-        }
-        #__next > * {
-          flex: 1;
-        }
-      `}</style>
-    </>
-  );
-}
-
 function Titulo(argumento) {
-  const Tag = argumento.tag || 'h1';
+  const Tag = argumento.tag || "h1";
 
   return (
     console.log(argumento.children),
@@ -67,11 +37,18 @@ function Titulo(argumento) {
 // export default HomePage;
 
 export default function PaginaInicial() {
-  const username = "Davi-Fernandes-Pereira";
+  // const username = "Davi-Fernandes-Pereira";
+  const [username, setUsername] = React.useState("Davi-Fernandes-Pereira");
+  const roteamento = useRouter();
+
+  var username2;
+
+  if (username.length > 2) {
+    username2 = username;
+  }
 
   return (
     <>
-      <GlobalStyle />
       <Box
         styleSheet={{
           display: "flex",
@@ -106,6 +83,11 @@ export default function PaginaInicial() {
           {/* Formulário */}
           <Box
             as="form"
+            onSubmit={function (event) {
+              event.preventDefault();
+              console.log("dfs");
+              roteamento.push("/chat");
+            }}
             styleSheet={{
               display: "flex",
               flexDirection: "column",
@@ -127,8 +109,27 @@ export default function PaginaInicial() {
               {appConfig.name}
             </Text>
 
+            {/* <input
+             type="text"
+             value={username}
+             onChange={function (event){
+               console.log(event.target.value)
+               //ONDE TA O VALOR????
+               const valor = event.target.value;
+              //troca o valor da var
+               setUsername(valor)
+             }}>
+            </input> */}
+
             <TextField
               fullWidth
+              value={username}
+              onChange={function (event) {
+                console.log(event.target.value);
+                const valor = event.target.value;
+
+                setUsername(valor);
+              }}
               textFieldColors={{
                 neutral: {
                   textColor: appConfig.theme.colors.neutrals[200],
@@ -173,7 +174,7 @@ export default function PaginaInicial() {
                 borderRadius: "50%",
                 marginBottom: "16px",
               }}
-              src={`https://github.com/${username}.png`}
+              src={`https://github.com/${username2}.png`}
             />
             <Text
               variant="body4"
@@ -184,7 +185,7 @@ export default function PaginaInicial() {
                 borderRadius: "1000px",
               }}
             >
-              {username}
+              {username2}
             </Text>
           </Box>
           {/* Photo Area */}
