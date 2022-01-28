@@ -1,7 +1,8 @@
 import { Box, Button, Text, TextField, Image } from "@skynexui/components";
-import React from "react";
+
 import { useRouter } from "next/router";
 import appConfig from "../config.json";
+import React, { useState } from 'react';
 
 function Titulo(argumento) {
   const Tag = argumento.tag || "h1";
@@ -40,6 +41,7 @@ export default function PaginaInicial() {
   // const username = "Davi-Fernandes-Pereira";
   const [username, setUsername] = React.useState("Davi-Fernandes-Pereira");
   const roteamento = useRouter();
+  const [cor, setCor] = useState('#F00');
 
   var username2;
 
@@ -54,9 +56,9 @@ export default function PaginaInicial() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: appConfig.theme.colors.primary[500],
+          backgroundColor: cor,
           backgroundImage:
-            "url(https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg)",
+            "url(https://f001.backblazeb2.com/file/papocine/2011/12/20190104-banner.jpg)",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundBlendMode: "multiply",
@@ -86,7 +88,8 @@ export default function PaginaInicial() {
             onSubmit={function (event) {
               event.preventDefault();
               console.log("dfs");
-              roteamento.push("/chat");
+              // roteamento.push("/chat?cor=" + cor.replace("#", ""));
+              roteamento.push("/chat?");
             }}
             styleSheet={{
               display: "flex",
@@ -98,7 +101,7 @@ export default function PaginaInicial() {
               marginBottom: "32px",
             }}
           >
-            <Titulo tag="h2">Boas vindas de volta!</Titulo>
+            <Titulo tag="h2">Boas vindas!</Titulo>
             <Text
               variant="body3"
               styleSheet={{
@@ -134,7 +137,7 @@ export default function PaginaInicial() {
                 neutral: {
                   textColor: appConfig.theme.colors.neutrals[200],
                   mainColor: appConfig.theme.colors.neutrals[900],
-                  mainColorHighlight: appConfig.theme.colors.primary[500],
+                  mainColorHighlight: cor,
                   backgroundColor: appConfig.theme.colors.neutrals[800],
                 },
               }}
@@ -145,9 +148,22 @@ export default function PaginaInicial() {
               fullWidth
               buttonColors={{
                 contrastColor: appConfig.theme.colors.neutrals["000"],
-                mainColor: appConfig.theme.colors.primary[500],
+                mainColor: cor,
                 mainColorLight: appConfig.theme.colors.primary[400],
                 mainColorStrong: appConfig.theme.colors.primary[600],
+              }}
+            />
+
+            <TextField
+              type="color"
+              focused={true}
+              label="Escolha a cor padrão"
+              fullWidth={true}
+              name="cor"
+              value={cor}
+              onChange={(event) => setCor(event.target.value)}
+              styleSheet={{
+                marginTop: "10px",
               }}
             />
           </Box>
