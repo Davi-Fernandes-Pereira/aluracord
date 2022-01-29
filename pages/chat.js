@@ -1,6 +1,13 @@
 import { Box, Text, TextField, Image, Button } from "@skynexui/components";
 import React from "react";
 import appConfig from "../config.json";
+import { createClient } from "@supabase/supabase-js";
+
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzQ3ODQ5NywiZXhwIjoxOTU5MDU0NDk3fQ.FI11bQM-Qxk-iMhvolByZ9rBxh4itVwKup0pYawd1bI";
+
+const SUPABASE_URL = "https://chhqeyuppgbsgvjdzxrw.supabase.co";
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 export default function ChatPage() {
   // Sua lógica vai aqui
@@ -10,14 +17,30 @@ export default function ChatPage() {
   const [mensagem, setMensagem] = React.useState("");
   const [listMensagens, setListMensagens] = React.useState([]);
 
+  React.useEffect(() => {
+    supabaseClient
+      .from("mensagens")
+      .select("*")
+      .order("id", { ascending: false })
+      .then(({ data }) => {
+        console.log("Dados", data);
+        setListMensagens(data);
+      });
+  }, []);
+
   function handleNovaMensagem(novaMensagem) {
     const mensagem = {
-      id: listMensagens.length + 1,
+      // id: listMensagens.length + 1,
       de: "davi-fernandes-pereira",
       texto: novaMensagem,
     };
 
-    setListMensagens([mensagem, ...listMensagens]);
+    supabaseClient
+      .from("mensagens")
+      .insert([mensagem])
+      .then(({ data }) => {
+        setListMensagens([data[0], ...listMensagens]);
+      });
 
     setMensagem("");
   }
@@ -104,6 +127,29 @@ export default function ChatPage() {
                 backgroundColor: appConfig.theme.colors.neutrals[800],
                 marginRight: "12px",
                 color: appConfig.theme.colors.neutrals[200],
+              }}
+            />
+            <Button
+              type="button"
+              label="OK"
+              fullWidth
+              onClick={() => {
+                handleNovaMensagem(mensagem);
+              }}
+              buttonColors={{
+                contrastColor: appConfig.theme.colors.neutrals["000"],
+                mainColor: appConfig.theme.colors.primary[600],
+                mainColorLight: appConfig.theme.colors.primary[400],
+                mainColorStrong: appConfig.theme.colors.primary[400],
+              }}
+              styleSheet={{
+                width: "20%",
+                height: "80%",
+                border: "0",
+                resize: "none",
+                borderRadius: "5px",
+                padding: "6px 8px",
+                marginRight: "12px",
               }}
             />
           </Box>
