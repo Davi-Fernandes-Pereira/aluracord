@@ -89,7 +89,7 @@ export default function PaginaInicial() {
               event.preventDefault();
               console.log("dfs");
               // roteamento.push("/chat?cor=" + cor.replace("#", ""));
-              roteamento.push("/chat?");
+              roteamento.push(`/chat?userName=${username}`);
             }}
             styleSheet={{
               display: "flex",
