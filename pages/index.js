@@ -41,7 +41,7 @@ export default function PaginaInicial() {
   // const username = "Davi-Fernandes-Pereira";
   const [username, setUsername] = React.useState("Davi-Fernandes-Pereira");
   const roteamento = useRouter();
-  const [cor, setCor] = useState('#F00');
+  const [cor, setCor] = useState('#3299CC');
 
   var username2;
 
@@ -58,7 +58,7 @@ export default function PaginaInicial() {
           justifyContent: "center",
           backgroundColor: cor,
           backgroundImage:
-            "url(https://f001.backblazeb2.com/file/papocine/2011/12/20190104-banner.jpg)",
+            "url(https://t.ctcdn.com.br/0qQ5EZ1ojoDTB2DA47G74555q-U=/1024x0/smart/i521491.jpeg)",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundBlendMode: "multiply",
@@ -73,13 +73,14 @@ export default function PaginaInicial() {
               xs: "column",
               sm: "row",
             },
+            opacity : 0.85,
             width: "100%",
             maxWidth: "700px",
             borderRadius: "5px",
             padding: "32px",
             margin: "16px",
             boxShadow: "0 2px 10px 0 rgb(0 0 0 / 20%)",
-            backgroundColor: appConfig.theme.colors.neutrals[700],
+            backgroundColor: appConfig.theme.colors.neutrals[900],
           }}
         >
           {/* Formulário */}
